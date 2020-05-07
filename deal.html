@@ -1,0 +1,339 @@
+<!-- 
+    Ronald Randolph
+    04.15.20
+    COSC 465: HW 7: Deal or No Deal
+ -->
+
+ <!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .base {
+                background-color: white;
+                color: black;
+            }
+            
+            .game {
+                background-color: lightgreen;
+                border: 1px solid black;
+                color: black;
+                padding-top: 20px;
+                padding-bottom: 40px;
+                text-align: center;
+                width: 60%;
+            }
+            
+            .suitcases {
+                padding-top: 30px;
+                display: flex;
+                justify-content: space-evenly;
+            }
+            
+            .caseBtn{
+                background-color: lightblue;
+                border: 3px solid white;
+                border-style: outset;
+                width: 105px;
+                height: 50px;
+            }
+
+            .checklist {
+                text-align: left;
+            }
+
+            .btn-group button {
+                background-color: darkgreen;
+                border: 3px solid white;
+                border-style: outset;
+                color: yellow;
+                width: 110px;
+                height: 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <!-- instruction section -->
+        <div class="base">
+            <p>To play click on the Start New Game button</p>
+            <p>Choose one of the 10 light blue buttons to be
+                your suitcase that you may choose to hold
+                until the end of the game.
+            </p>
+            <p>Then choose another button, which corresponds
+                to opening a suitcase with a certain money
+                amount.
+            </p>
+            <p>
+                Then choose between Deal or opening another
+                suitcase. If you choose Deal, then the game
+                ends and you win the amount of money given
+                in the offer box. If you open suitcase,
+                then you will recieve a new offer.
+            </p>
+            <p>
+                Continue in this fashion until you choose Deal
+                or until you have opened all of the suitcases,
+                in which you will win the amount that is in the
+                suitcase you chose at the beginning of the game.
+            </p>
+            <p>
+                To play another game, just click on the Start
+                New Game button again.
+            </p>
+        </div>
+
+        <hr>
+
+        <!-- game board section -->
+        <div class="base">
+            <div class="game">
+            
+                <!-- readonly offer section -->
+                <div>
+                    <label>Offer:</label>
+                    <input id="offer" type="text" value="" maxlength="7" readonly>
+                </div>
+
+                <!-- suitcase section: contains buttons + remaining cases -->
+                <div class="suitcases">
+
+                    <!-- 2x5 table of buttons for cases -->
+                    <table id="caseBtns">
+                        <tr>
+                            <th>
+                                <input type="button" class="caseBtn" value="1">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="2">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="3">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="4">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="5">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <input type="button" class="caseBtn" value="6">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="7">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="8">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="9">
+                            </th>
+                            <th>
+                                <input type="button" class="caseBtn" value="10">
+                            </th>
+                        </tr>
+                    </table>
+
+                    <!-- 1x10 table of checkboxes -->
+                    <table class="checklist">
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$0.01</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$1</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$5</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$10</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$100</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$1000</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$10000</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$100000</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$500000</label>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check" onclick="return false;">
+                            <label>$1000000</label>
+                        </th>
+                    </tr>
+                    </table>
+                </div>
+
+                <!-- options buttons: start/end game -->
+                <div class="btn-group">
+                    <button id="deal">Deal</button>
+                    <button id="start">Start New Game</button>
+                </div>
+
+            </div>
+        </div>
+    
+        <script>
+            
+            var amounts = ["$0.01", "$1", "$5", "$10", "$100", "$1000", "$10000", "$100000", "$500000", "$1000000"];
+            var amounts1 = [0.01, 1.0, 5.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 500000.0, 1000000.0];
+            var cases = document.getElementsByClassName("caseBtn");
+            var checks = document.getElementsByClassName("check");
+            var caseContents = new Array(10).fill("");
+            var claimedCase = -1;
+            var offerAvail = false;
+    
+            //user clicks 'start new game'
+            document.getElementById("start").addEventListener("click",startGame);
+            
+            //gameboard is initialized
+            function startGame() {
+
+                //reset gameboard
+                document.getElementById("deal").removeEventListener("click",takeOffer);
+                document.getElementById("offer").value = "";
+                offerAvail = false;
+                
+                for (var i=0; i < cases.length; i++){
+                    cases[i].value = (i+1).toString();
+                    cases[i].removeEventListener("click",openCase);
+                    cases[i].style.setProperty("background-color","lightblue");
+                    cases[i].style.setProperty("color","black");
+                    cases[i].disabled = false;
+                    checks[i].checked = false;
+                    caseContents[i] = "";
+                }
+
+                //randomly assign values to cases
+                for (var i=0; i < cases.length; i++) {
+                    
+                    do {
+                        var random = Math.floor(Math.random() * 10);
+                    } while (caseContents[random] != "");
+                    
+                    caseContents[random] = amounts[i];
+                }
+
+                //wait for user to reserve case
+                for (var i=0; i < cases.length; i++) {
+                    cases[i].addEventListener("click",claimCase);
+                }
+            }
+
+            //user selects their suitcase
+            function claimCase() {
+
+                //disables and marks reserved case
+                this.style.setProperty("background-color","blue");
+                this.style.setProperty("color","silver");
+                claimedCase = parseInt(this.value - 1);
+                this.disabled = true;
+
+                //switch click on event from claim --> open
+                for (var i=0; i < cases.length; i++) {
+                    cases[i].removeEventListener("click",claimCase);
+                    cases[i].addEventListener("click",openCase);                    
+                }
+            }
+
+            //user opens desired case
+            function openCase() {
+                var sum = 0;
+                var count = 0;
+                var index = parseInt(this.value - 1);
+                
+                //disables case and reveals value
+                this.disabled = true;
+                this.style.setProperty("background-color","yellow");
+                this.value = caseContents[index];
+
+                //associate checkbox is checked
+                checks[amounts.indexOf(caseContents[index])].checked = true;
+
+                //calculate offer
+                for (var i=0; i < checks.length; i++) {
+                    if(checks[i].checked == false){
+                        sum += amounts1[i];
+                        count += 1;
+                    }
+                }
+
+                //if all non-claimed cases opened - end game
+                if(count == 1){
+                    keepCase();
+                }
+
+                //update banker's offer in text box
+                var offer = Math.round((sum / count) * 0.9);
+                document.getElementById("offer").value = "$"+(offer).toString();
+
+                //waits for player to accept deal
+                if(offerAvail == false){
+                    document.getElementById("deal").addEventListener("click",takeOffer);
+                    offerAvail = true;
+                }
+            }
+
+            //user accepts offer - end game
+            function takeOffer() {
+
+                //all suitcase values are revealed
+                for (var i=0; i < cases.length; i++) {
+                    cases[i].value = caseContents[i];
+                }
+
+                //game over notification
+                var amt = document.getElementById("offer").value;
+                window.setTimeout(function(){alert("Game over. You won " + amt); },1000);
+            }
+
+            function keepCase() {
+
+                //value of user's suitcase is revealed
+                cases[claimedCase].value = caseContents[claimedCase];
+
+                //game over notification
+                window.setTimeout(function(){alert("Game over. You won " + caseContents[claimedCase]); },1000);
+            }
+
+        </script>
+    </body>
+</html>
